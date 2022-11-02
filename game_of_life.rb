@@ -39,7 +39,7 @@ class Grid
     end
    
     def toggle(x,y)
-      if @grid.has_key?([x, y])
+      if @grid.key?([x, y])
         @grid.delete([x, y])
       else
         @grid[[x, y]] = true
@@ -59,7 +59,38 @@ class Grid
     end
     def advance_frame
         if @playing
-            
+          new_grid = {}
+
+          (Window.width / SQUARE_SIZE).times do |x|
+            (Window.height / SQUARE_SIZE).times do |y|
+              alive = @grid.key?([x, y])
+
+              alive_neighbours = [
+                # NW
+                @grid.key?([x - 1, y - 1]),
+                # N
+                @grid.key?([x, y - 1]),
+                # NE
+                @grid.key?([x + 1, y - 1]),
+                # E
+                @grid.key?([x + 1, y]),
+                # SE
+                @grid.key?([x + 1, y + 1]),
+                # S
+                @grid.key?([x, y + 1]),
+                # SW
+                @grid.key?([x - 1, y + 1]),
+                # W
+                @grid.key?([x - 1, y ])
+              ].count(true)
+
+              if (alive && alive_neighbours.between?(2,3)) || (!alive && alive_neighbours == 3)
+                new_grid[[x,y]] = true
+              end
+
+            end
+          end
+          @grid = new_grid  
         end
     end
   end
