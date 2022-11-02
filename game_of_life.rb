@@ -1,11 +1,12 @@
 require 'ruby2d'
+require_relative './lib/grid'
 
 set background: 'black'
 
 SQUARE_SIZE = 30
 set width: SQUARE_SIZE * 20
 set height: SQUARE_SIZE * 20
-
+=begin
 class Grid
   def initialize
     @grid = {}
@@ -100,7 +101,7 @@ class Grid
     end
   end
 end
-
+=end
 grid = Grid.new
 
 update do
