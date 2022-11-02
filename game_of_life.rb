@@ -1,16 +1,21 @@
 require 'ruby2d'
 
-set background: 'white'
+set background: 'black'
 
-SQUARE_SIZE = 40
-set width: SQUARE_SIZE * 16
-set height: SQUARE_SIZE * 12
+SQUARE_SIZE = 30
+set width: SQUARE_SIZE * 20
+set height: SQUARE_SIZE * 20
 
 class Grid
   def initialize
     @grid = {}
     @playing = false
   end
+
+  def clear
+    @grid = {}
+  end
+
   def play_pause
     @playing = !@playing
   end
@@ -19,7 +24,7 @@ class Grid
     (Window.width / SQUARE_SIZE).times do |x|
     Line.new(
     width: 1,
-    color: 'gray',
+    color: 'green',
     y1: 0,
     y2: Window.height,
     x1: x * SQUARE_SIZE,
@@ -29,7 +34,7 @@ class Grid
     (Window.height / SQUARE_SIZE).times do |y|
       Line.new(
         width: 1,
-        color: 'gray',
+        color: 'green',
         x1: 0,
         x2: Window.width,
         y1: y * SQUARE_SIZE,
@@ -50,7 +55,7 @@ class Grid
     def draw_alive_squares
         @grid.keys.each do |x, y|
             Square.new(
-                color: 'black',
+                color: 'green',
                 x: x * SQUARE_SIZE,
                 y: y * SQUARE_SIZE,
                 size: SQUARE_SIZE
@@ -113,8 +118,11 @@ on :mouse_down do |event|
 end
 
 on :key_down do |event|
-    if event.key == 'p'
+    if event.key == 'space'
         grid.play_pause
+    end
+    if event.key == 'c'
+      grid.clear
     end
 end
 
